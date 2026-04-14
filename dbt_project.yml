@@ -6,7 +6,7 @@ version: "1.0.0"
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: "default"
+profile: "dbt_snow"
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -38,27 +38,12 @@ clean-targets: # directories to be removed by `dbt clean`
 # ---------------------------------------------------
 models:
   dbt_snow_shop:
-    dbt_snow_shop:
-      # ------------------------
-      # BRONZE (Raw / Ingestion)
-      # ------------------------
-      bronze:
-        +materialized: view
-        +schema: bronze
-        +tags: ["bronze"]
-
-      # ------------------------
-      # SILVER (Staging / Cleaned)
-      # ------------------------
-      silver:
-        +materialized: view
-        +schema: silver
-        +tags: ["silver"]
-
-      # ------------------------
-      # GOLD (Marts / Business)
-      # ------------------------
-      gold:
-        +materialized: table
-        +schema: gold
-        +tags: ["gold"]
+    bronze:
+      +materialized: table
+      +schema: bronze
+    silver:
+      +materialized: view
+      +schema: silver
+    gold:
+      +materialized: table
+      +schema: gold

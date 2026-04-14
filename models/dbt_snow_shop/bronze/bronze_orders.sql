@@ -1,6 +1,6 @@
 {{
   config(
-    tag = 'jaffa_shop',
+    tag = ['jaffle_shop'],
     materialized='table'
   ) 
 }}
