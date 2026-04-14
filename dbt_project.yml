@@ -38,26 +38,27 @@ clean-targets: # directories to be removed by `dbt clean`
 # ---------------------------------------------------
 models:
   dbt_snow_shop:
-    # ------------------------
-    # BRONZE (Raw / Ingestion)
-    # ------------------------
-    bronze:
-      +materialized: view
-      +schema: bronze
-      +tags: ["bronze"]
+    dbt_snow_shop:
+      # ------------------------
+      # BRONZE (Raw / Ingestion)
+      # ------------------------
+      bronze:
+        +materialized: view
+        +schema: bronze
+        +tags: ["bronze"]
 
-    # ------------------------
-    # SILVER (Staging / Cleaned)
-    # ------------------------
-    silver:
-      +materialized: view
-      +schema: silver
-      +tags: ["silver"]
+      # ------------------------
+      # SILVER (Staging / Cleaned)
+      # ------------------------
+      silver:
+        +materialized: view
+        +schema: silver
+        +tags: ["silver"]
 
-    # ------------------------
-    # GOLD (Marts / Business)
-    # ------------------------
-    gold:
-      +materialized: table
-      +schema: gold
-      +tags: ["gold"]
+      # ------------------------
+      # GOLD (Marts / Business)
+      # ------------------------
+      gold:
+        +materialized: table
+        +schema: gold
+        +tags: ["gold"]
