@@ -39,10 +39,11 @@ clean-targets: # directories to be removed by `dbt clean`
 models:
   dbt_snow_shop:
     bronze:
-      +materialized: table
+      +materialized: view
       +schema: bronze
     silver:
-      +materialized: view
+      +materialized: table
+      +incremental_strategy: merge
       +schema: silver
     gold:
       +materialized: table

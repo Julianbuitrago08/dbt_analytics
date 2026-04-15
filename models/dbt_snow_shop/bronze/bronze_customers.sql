@@ -1,6 +1,7 @@
 {{
   config(
     tag = ['jaffle_shop'],
+    shema = 'BRONZE',
     materialized='table'
   ) 
 }}
