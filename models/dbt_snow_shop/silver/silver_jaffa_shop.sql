@@ -1,7 +1,9 @@
 {{
   config(
     tag = 'jaffa_shop',
-    materialized='table'
+    shema = 'SILVER',
+    materialized='table',
+    unique_key = 'customer_id'
   ) 
 }}
 

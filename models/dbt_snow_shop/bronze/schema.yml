@@ -1,0 +1,64 @@
+version: 2
+
+models:
+
+  - name: bronze_customers
+    description: "Raw customers data loaded from a CSV file in a Snowflake stage."
+    columns:
+      - name: id
+        description: "Primary key for customers."
+        tests:
+          - unique
+          - not_null
+
+      - name: first_name
+        description: "Customer first name."
+
+      - name: last_name
+        description: "Customer last name."
+
+  - name: bronze_orders
+    description: "Raw orders data loaded from a CSV file in a Snowflake stage."
+    columns:
+      - name: id
+        description: "Primary key for orders."
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        description: "Identifier of the customer who placed the order."
+        tests:
+          - not_null
+
+      - name: order_date
+        description: "Date when the order was placed."
+
+      - name: status
+        description: "Current status of the order."
+
+  - name: bronze_payment
+    description: "Raw Stripe payment data loaded from a CSV file in a Snowflake stage."
+    columns:
+      - name: id
+        description: "Primary key for payments."
+        tests:
+          - unique
+          - not_null
+
+      - name: orderid
+        description: "Identifier of the related order."
+        tests:
+          - not_null
+
+      - name: paymentmethod
+        description: "Payment method used (e.g. card, bank transfer)."
+
+      - name: status
+        description: "Status of the payment."
+
+      - name: amount
+        description: "Payment amount."
+
+      - name: created
+        description: "Timestamp when the payment was created."
