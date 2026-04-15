@@ -2,8 +2,6 @@
   config(
     tag = 'jaffa_shop',
     shema = 'GOLD',
-    tag = 'jaffa_shop',
-    shema = 'GOLD',
     materialized='table'
   ) 
 }}
