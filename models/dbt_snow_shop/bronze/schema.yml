@@ -1,5 +1,17 @@
 version: 2
 
+sources:
+  - name: dbt_snow_shop
+    schema: bronze
+    tables:
+      - name: bronze_customers
+        description: "Raw customers CSV loaded into Snowflake."
+
+      - name: bronze_orders
+        description: "Raw orders data loaded externally"
+      - name: bronze_payments
+        description: "Raw Stripe payments CSV loaded into Snowflake."
+
 models:
 
   - name: bronze_customers
@@ -7,7 +19,7 @@ models:
     columns:
       - name: id
         description: "Primary key for customers."
-        tests:
+        data_tests:
           - unique
           - not_null
 
@@ -17,48 +29,81 @@ models:
       - name: last_name
         description: "Customer last name."
 
+      - name: source_file_name
+        description: "Name of the source file from which the record was loaded."
+
+      - name: file_last_modified_ts
+        description: "Timestamp when the source file was last modified."
+
+      - name: load_timestamp
+        description: "Timestamp when the record was loaded into Snowflake."
+
   - name: bronze_orders
     description: "Raw orders data loaded from a CSV file in a Snowflake stage."
+    freshness: null
     columns:
       - name: id
         description: "Primary key for orders."
-        tests:
+        data_tests:
           - unique
           - not_null
 
       - name: user_id
         description: "Identifier of the customer who placed the order."
-        tests:
+        data_tests:
           - not_null
+          - relationships:
+              to: ref('bronze_customers')
+              field: id
 
       - name: order_date
         description: "Date when the order was placed."
 
       - name: status
         description: "Current status of the order."
+        data_tests:
+          - accepted_values:
+              values: ['completed', 'shipped', 'placed','return_pending','returned']
 
+      - name: source_file_name
+        description: "Name of the source file from which the record was loaded."
+
+      - name: file_last_modified_ts
+        description: "Timestamp when the source file was last modified."
+
+      - name: load_timestamp
+        description: "Timestamp when the record was loaded into Snowflake."
   - name: bronze_payment
     description: "Raw Stripe payment data loaded from a CSV file in a Snowflake stage."
     columns:
       - name: id
         description: "Primary key for payments."
-        tests:
+        data_tests:
           - unique
           - not_null
 
       - name: orderid
         description: "Identifier of the related order."
-        tests:
+        data_tests:
           - not_null
 
       - name: paymentmethod
         description: "Payment method used (e.g. card, bank transfer)."
 
-      - name: status
-        description: "Status of the payment."
+      - name: payment_status
+        description: "Current status of the payment."
 
       - name: amount
         description: "Payment amount."
 
       - name: created
         description: "Timestamp when the payment was created."
+
+      - name: source_file_name
+        description: "Name of the source file from which the record was loaded."
+
+      - name: file_last_modified_ts
+        description: "Timestamp when the source file was last modified."
+
+      - name: load_timestamp
+        description: "Timestamp when the record was loaded into Snowflake."
