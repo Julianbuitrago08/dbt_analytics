@@ -1,7 +1,7 @@
 {{
   config(
     tag = 'jaffa_shop',
-    shema = 'SILVER',
+    shema = 'silver',
     materialized='table',
     unique_key = 'customer_id'
   ) 
