@@ -54,7 +54,7 @@ models:
           - relationships:
               arguments:
                 field: id
-                to: ref('customers')
+                to: ref('bronze_customers')
 
 
       - name: order_date
