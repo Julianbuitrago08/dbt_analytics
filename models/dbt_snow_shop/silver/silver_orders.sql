@@ -48,3 +48,4 @@ final as (
 )
 select *
 from final
+where order_id is not null

@@ -28,7 +28,7 @@ models:
 
       - name: number_of_orders
         description: "Total number of orders placed by the customer."
-
+        
   - name: silver_orders
     description: "Fact table containing customer order lifetime value."
 
@@ -47,5 +47,7 @@ models:
         description: "Total successful payment amount per order."
 
     tests:
-      - unique:
-          column_name: "customer_id || '-' || order_id"
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - customer_id
+            - order_id
