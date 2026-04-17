@@ -1,6 +1,6 @@
 {{
   config(
-    tag = 'jaffa_shop',
+    tags = 'jaffa_shop',
     schema = 'gold',
     materialized='table'
   ) 

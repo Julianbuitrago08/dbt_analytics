@@ -1,6 +1,6 @@
 {{
   config(
-    tag = ['jaffle_shop'],
+    tags = ['jaffle_shop'],
     schema = 'bronze',
     materialized='table'
   ) 
