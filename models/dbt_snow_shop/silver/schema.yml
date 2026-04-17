@@ -4,7 +4,6 @@ models:
   - name: silver_customers
     schema: silver
     description: "Customer dimension table with order aggregation metrics."
-    tags: ['jaffa_shop']
 
     columns:
       - name: customer_id
@@ -34,7 +33,6 @@ models:
   - name: silver_orders
     schema: silver
     description: "Fact table containing customer order lifetime value."
-    tags: ['jaffa_shop']
 
     columns:
       - name: order_id
