@@ -2,7 +2,6 @@ version: 2
 
 models:
   - name: silver_customers
-    schema: silver
     description: "Customer dimension table with order aggregation metrics."
 
     columns:
@@ -31,7 +30,6 @@ models:
         description: "Total number of orders placed by the customer."
 
   - name: silver_orders
-    schema: silver
     description: "Fact table containing customer order lifetime value."
 
     columns:
