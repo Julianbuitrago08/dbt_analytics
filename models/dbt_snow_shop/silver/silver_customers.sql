@@ -1,6 +1,6 @@
 {{
   config(
-    tag = 'jaffa_shop',
+    tags = 'jaffa_shop',
     schema = 'silver',
     materialized='table',
     unique_key = 'customer_id'

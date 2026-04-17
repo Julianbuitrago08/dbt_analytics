@@ -53,8 +53,10 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('bronze_customers')
-              field: id
+              arguments:
+                field: id
+                to: ref('customers')
+
 
       - name: order_date
         description: "Date when the order was placed."
@@ -62,7 +64,8 @@ models:
       - name: status
         description: "{{ doc('order_status') }}" 
         data_tests:
-          - accepted_values:
+        - accepted_values:
+            arguments:
               values: ['completed', 'shipped', 'placed','return_pending','returned']
 
       - name: source_file_name
