@@ -29,7 +29,7 @@ models:
       - name: number_of_orders
         description: "Total number of orders placed by the customer."
         
-  - name: silver_orders
+  - name: silver_orders_customer
     description: "Fact table containing customer order lifetime value."
 
     columns:
