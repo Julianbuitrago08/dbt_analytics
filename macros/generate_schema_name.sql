@@ -55,19 +55,3 @@
     {%- endif -%}
 
 {%- endmacro %}
-
---{% macro generate_schema_name(custom_schema_name, node) -%}
-
---    {%- set default_schema = target.schema -%}
---    {%- set env = env_var('DBT_ENV_NAME') -%}
-
---    {%- if custom_schema_name is none -%}
---        {{ default_schema }}
---    {%- else -%}
---        {{ custom_schema_name | trim }}
---    {%- endif -%}
-
---{%- endmacro %}
----    {%- set env = env_var('DBT_ENV_NAME', 'dev') -%}
-
---    {%- if custom_schema_name is none or env == 'dev' -%}
