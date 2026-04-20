@@ -6,11 +6,14 @@
   ) 
 }}
 
-select *
-from (
-  {{ union_tables_by_prefix(
-       database='ANALYTICS_DEV',
-       schema='silver',
-       prefix='raw_'
-  ) }}
+select
+    $1::integer as order_id,
+    $2::integer as order_amount,
+    $3::date    as order_date,
+    metadata$filename             as source_file_name,
+    metadata$file_last_modified   as file_last_modified_ts,
+    metadata$start_scan_time      as load_timestamp
+from @BRONZE.MY_INTERAL_STAGE/gy8ugznz4g5h-2025-11-143_43pm1.csv
+(
+  file_format => BRONZE.FF_CSV_SKIP_HEADER
 )
