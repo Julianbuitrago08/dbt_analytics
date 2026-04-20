@@ -28,7 +28,7 @@ select
     c.number_of_orders,
     sum(o.lifetime_value) as lifetime_value
 from customers c
-left join {{ ref('silver_orders_factory') }} o
+left join {{ ref('silver_orders') }} o
     on c.customer_id = o.customer_id
 group by
     c.customer_id,
