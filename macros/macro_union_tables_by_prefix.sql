@@ -26,7 +26,6 @@
     - New tables matching the prefix will be automatically included
       without code changes
 -#}
-
 {% macro union_tables_by_prefix(database, schema, prefix) %}
 
   {%- set tables = dbt_utils.get_relations_by_prefix(
@@ -35,14 +34,17 @@
       prefix=prefix
   ) -%}
 
-  {% for table in tables %}
-    {%- if not loop.first -%}
-      union all
-    {%- endif %}
+  {% if tables | length == 0 %}
+    select null as _empty where 1 = 0
+  {% else %}
+    {% for table in tables %}
+      {%- if not loop.first -%}
+        union all
+      {%- endif %}
 
-    select *
-    from {{ table.database }}.{{ table.schema }}.{{ table.name }}
-
-  {% endfor -%}
+      select *
+      from {{ table.database }}.{{ table.schema }}.{{ table.name }}
+    {% endfor %}
+  {% endif %}
 
 {% endmacro %}
