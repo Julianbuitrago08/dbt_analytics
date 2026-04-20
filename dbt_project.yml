@@ -48,3 +48,5 @@ models:
     gold:
       +materialized: table
       +schema: gold
+  snowflake_spend:
+    enabled: true
