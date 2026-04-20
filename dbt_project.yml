@@ -35,7 +35,7 @@ models:
         +materialized: table
         +schema: bronze
       silver:
-        +materialized: table
+        +materialized: incremental
         +incremental_strategy: merge
         +schema: silver
       gold:
@@ -47,12 +47,12 @@ models:
         +materialized: table
         +schema: bronze
       silver:
-        +materialized: table
+        +materialized: incremental
         +incremental_strategy: merge
         +schema: silver
       gold:
         +materialized: table
         +schema: gold
-        
+
     snowflake_spend:
-      +enabled: true
+      +enabled: "{{ target.name != 'dev' }}"
