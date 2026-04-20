@@ -48,5 +48,18 @@ models:
     gold:
       +materialized: table
       +schema: gold
+
+  dbt_shop_store_2:
+    bronze:
+      +materialized: table
+      +schema: bronze
+    silver:
+      +materialized: table
+      +incremental_strategy: merge
+      +schema: silver
+    gold:
+      +materialized: table
+      +schema: gold
+      
   snowflake_spend:
     enabled: true
