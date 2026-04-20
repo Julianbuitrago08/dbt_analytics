@@ -47,8 +47,7 @@
 
     {%- set default_schema = target.schema -%}
 
-    {%- if custom_schema_name is none
-          or custom_schema_name | trim == '' -%}
+    {%- if custom_schema_name is none or custom_schema_name | trim == '' -%}
         {{ default_schema }}
     {%- else -%}
         {{ custom_schema_name | trim }}
