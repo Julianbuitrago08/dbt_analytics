@@ -17,16 +17,16 @@ orders as (
 
 payments as (
 
-  select * from {{ ref('bronze__payment') }}
+  select *
+  from {{ ref('bronze_payment') }}
 
 ),
 
 completed_payments as (
-
   select 
-    order_id,
-    max(payment_created) as payment_finalized_date,
-    sum(payment_amount) as total_amount_paid
+    orderid as order_id,
+    max(created) as payment_finalized_date,
+    sum(amount) as total_amount_paid
   from payments
   where payment_status <> 'fail'
   group by 1
@@ -36,14 +36,14 @@ completed_payments as (
 paid_orders as (
 
   select 
-    orders.order_id,
-    orders.customer_id,
+    orders.id as order_id,
+    orders.user_id as customer_id,
     orders.order_date,
-    orders.order_status,
+    orders.status as order_status,
     completed_payments.total_amount_paid,
     completed_payments.payment_finalized_date
   from orders
- left join completed_payments on orders.order_id = completed_payments.order_id
+ left join completed_payments on orders.id = completed_payments.order_id
 )
 
 select * from paid_orders
