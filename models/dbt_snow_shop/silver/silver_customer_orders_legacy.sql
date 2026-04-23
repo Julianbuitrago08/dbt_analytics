@@ -1,25 +1,36 @@
+{{
+  config(
+    tags = 'jaffa_shop',
+    schema = 'silver',
+    materialized='table',
+    unique_key = ['customer_id','order_id']
+  ) 
+}}
 WITH paid_orders as (select Orders.ID as order_id,
         Orders.USER_ID    as customer_id,
         Orders.ORDER_DATE AS order_placed_at,
-            Orders.STATUS AS order_status,
+        Orders.STATUS AS order_status,
         p.total_amount_paid,
         p.payment_finalized_date,
         C.FIRST_NAME    as customer_first_name,
-            C.LAST_NAME as customer_last_name
-    FROM raw.jaffle_shop.orders as Orders
-    left join (select ORDERID as order_id, max(CREATED) as payment_finalized_date, sum(AMOUNT) / 100.0 as total_amount_paid
-from raw.stripe.payment
-where STATUS <> 'fail'
-group by 1) p ON orders.ID = p.order_id
-left join raw.jaffle_shop.customers C on orders.USER_ID = C.ID ),
-
+        C.LAST_NAME as customer_last_name
+    FROM {{ref('bronze_orders')}} as Orders
+    left join ( select 
+                    ORDERID as order_id, max(CREATED) as payment_finalized_date, 
+                    {{ cents_to_dollars('coalesce(sum(AMOUNT), 0)') }} as total_amount_paid
+                from {{ref('bronze_payment')}}
+                where payment_status <> 'fail'
+                group by 1) p 
+        ON orders.ID = p.order_id
+left join {{ref('bronze_customers')}} C on orders.USER_ID = C.ID )
+,
 customer_orders 
     as (select C.ID as customer_id
         , min(ORDER_DATE) as first_order_date
         , max(ORDER_DATE) as most_recent_order_date
         , count(ORDERS.ID) AS number_of_orders
-    from raw.jaffle_shop.customers C 
-    left join raw.jaffle_shop.orders as Orders
+    from {{ref('bronze_customers')}} C 
+    left join {{ref('bronze_orders')}} as Orders
     on orders.USER_ID = C.ID 
     group by 1)
 
