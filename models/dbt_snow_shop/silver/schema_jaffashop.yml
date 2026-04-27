@@ -1,12 +1,70 @@
 version: 2
 
 models:
-  - name: silver_jaffashop_customers
-    description: "Customer dimension table with order aggregation metrics."
 
+  - name: silver_dialy_customers_orders
+    description: "Daily aggregation of customer orders."
+    columns:
+      - name: primary_key
+        description: "Surrogate key generated from customer_id and order_date."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Unique identifier for the customer."
+        tests:
+          - not_null
+
+      - name: order_date
+        description: "Date of the order."
+
+      - name: quantity_orders
+        description: "Total number of orders placed by the customer on the given date."
+
+
+  - name: silver_customer_orders_legacy
+    description: "Legacy fact table combining customer, order, and payment information."
+    columns:
+      - name: order_id
+        description: "Unique identifier for the order."
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: "Customer identifier."
+        tests:
+          - not_null
+
+      - name: order_placed_at
+        description: "Timestamp when the order was placed."
+
+      - name: total_amount_paid
+        description: "Total paid amount for the order."
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - customer_id
+              - order_id
+
+
+  - name: silver_date_spine
+    description: "Date spine containing daily dates for analytics."
+    columns:
+      - name: date_day
+        description: "Calendar date."
+        tests:
+          - not_null
+          - unique
+
+
+  - name: silver_jaffa_shop
+    description: "Customer dimension table with aggregated order metrics."
     columns:
       - name: customer_id
-        description: "Unique identifier for each customer."
+        description: "Unique customer identifier."
         tests:
           - not_null
           - unique
@@ -17,9 +75,6 @@ models:
       - name: last_name
         description: "Customer last name."
 
-      - name: full_name
-        description: "Concatenation of first and last name."
-
       - name: first_order_date
         description: "Date of the customer’s first order."
 
@@ -27,24 +82,27 @@ models:
         description: "Date of the customer’s most recent order."
 
       - name: number_of_orders
-        description: "Total number of orders placed by the customer."
-        
-  - name: silver_jaffashop_orders_customer
-    description: "Fact table containing customer order lifetime value."
+        description: "Total number of orders placed."
 
+      - name: avg_amount
+        description: "Average order amount per customer."
+
+
+  - name: silver_jaffashop_int_orders
+    description: "Intermediate table of paid orders enriched with payment data."
     columns:
       - name: order_id
-        description: "Unique identifier for each order."
+        description: "Order identifier."
         tests:
           - not_null
 
       - name: customer_id
-        description: "Identifier of the customer who placed the order."
+        description: "Customer identifier."
         tests:
           - not_null
 
-      - name: lifetime_value
-        description: "Total successful payment amount per order."
+      - name: total_amount_paid
+        description: "Total finalized payment amount for the order."
 
     tests:
       - dbt_utils.unique_combination_of_columns:
@@ -52,3 +110,66 @@ models:
             combination_of_columns:
               - customer_id
               - order_id
+
+
+  - name: silver_jaffashop_orders
+    description: "Fact table with order-level lifetime value."
+    columns:
+      - name: order_id
+        description: "Order identifier."
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: "Customer identifier."
+        tests:
+          - not_null
+
+      - name: lifetime_value
+        description: "Total successful payment amount per order."
+
+
+  - name: silver_jaffashop_orders_customer
+    description: "Order-focused customer lifetime value table."
+    columns:
+      - name: order_id
+        description: "Order identifier."
+        tests:
+          - not_null
+
+      - name: customer_id
+        description: "Customer identifier."
+        tests:
+          - not_null
+
+      - name: lifetime_value
+        description: "Lifetime value of the order."
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - customer_id
+              - order_id
+
+
+  - name: silver_jaffashop_orders_factory
+    description: "Pivoted payment amounts by payment method at order level."
+    columns:
+      - name: order_id
+        description: "Order identifier."
+        tests:
+          - not_null
+          - unique
+
+      - name: bank_transfer_amount
+        description: "Total amount paid via bank transfer."
+
+      - name: credit_card_amount
+        description: "Total amount paid via credit card."
+
+      - name: coupon_amount
+        description: "Total amount paid using coupons."
+
+      - name: gift_card_amount
+        description: "Total amount paid using gift cards."
