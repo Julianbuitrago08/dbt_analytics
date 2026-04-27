@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: silver_customers
+  - name: silver_jaffashop_customers
     description: "Customer dimension table with order aggregation metrics."
 
     columns:
@@ -29,7 +29,7 @@ models:
       - name: number_of_orders
         description: "Total number of orders placed by the customer."
         
-  - name: silver_orders_customer
+  - name: silver_jaffashop_orders_customer
     description: "Fact table containing customer order lifetime value."
 
     columns:
