@@ -38,6 +38,7 @@ models:
         +materialized: incremental
         +incremental_strategy: merge
         +schema: silver
+        +on_schema_change: sync_all_columns
       gold:
         +materialized: table
         +schema: gold
@@ -50,6 +51,7 @@ models:
         +materialized: incremental
         +incremental_strategy: merge
         +schema: silver
+        +on_schema_change: sync_all_columns
       gold:
         +materialized: table
         +schema: gold

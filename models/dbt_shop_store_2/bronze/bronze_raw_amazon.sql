@@ -1,6 +1,6 @@
 {{
   config(
-    tags = ['shop_store_2'],
+    tags = 'shop_store_2',
     schema = 'bronze',
     materialized='table'
   ) 

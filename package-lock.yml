@@ -11,6 +11,4 @@ packages:
   - name: snowflake_spend
     package: gitlabhq/snowflake_spend
     version: 1.4.0
-  - package: dbt-labs/audit_helper
-    version: 0.13.0
 sha1_hash: 66519ff229a30f71dfa96f83dc6ec824e8e3d51a

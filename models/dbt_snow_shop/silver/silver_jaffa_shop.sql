@@ -2,8 +2,9 @@
   config(
     tags = 'jaffa_shop',
     schema = 'silver',
-    materialized='table',
-    unique_key = 'customer_id'
+    materialized = 'incremental',
+    unique_key = 'customer_id',
+    on_schema_change = 'sync_all_columns'
   ) 
 }}
 
@@ -16,11 +17,19 @@ with customers as (
 ),
 orders as (
     select
-        id         as order_id,
-        user_id    as customer_id,
-        order_date,
-        status
-    from {{ref('bronze_orders')}}
+        o.id         as order_id,
+        o.user_id    as customer_id,
+        o.order_date,
+        o.status,
+        sum(p.amount) as amount
+    from {{ref('bronze_orders')}} o
+    left join {{ref('bronze_payment')}} p
+        on o.id = p.orderid
+    group by 
+        o.id,
+        o.user_id,
+        o.order_date,
+        o.status
 ),
 
 customer_orders as (
@@ -28,7 +37,8 @@ customer_orders as (
         customer_id,
         min(order_date)  as first_order_date,
         max(order_date)  as most_recent_order_date,
-        count(order_id)  as number_of_orders
+        count(order_id)  as number_of_orders,
+        {{ dbt_utils.safe_divide('sum(amount)', 'count(order_id)') }} as avg_amount
     from orders
     group by customer_id
 
@@ -41,7 +51,8 @@ final as (
         c.last_name,
         co.first_order_date,
         co.most_recent_order_date,
-        coalesce(co.number_of_orders, 0) as number_of_orders
+        coalesce(co.number_of_orders, 0) as number_of_orders,
+        coalesce(co.avg_amount, 0) as avg_amount
     from customers c
     left join customer_orders co
         on c.customer_id = co.customer_id

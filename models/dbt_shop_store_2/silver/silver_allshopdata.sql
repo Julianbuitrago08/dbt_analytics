@@ -1,8 +1,10 @@
 {{
   config(
-    tags = ['shop_store_2'],
+    tags = 'shop_store_2',
     schema = 'silver',
-    materialized='table'
+    unique_key = ['order_id','order_date'],
+    materialized = 'incremental',
+    on_schema_change = 'sync_all_columns'
   ) 
 }}
 

@@ -2,8 +2,9 @@
   config(
     tags = 'jaffa_shop',
     schema = 'silver',
-    materialized='table',
-    unique_key = ['customer_id','order_id']
+    materialized = 'incremental',
+    unique_key = ['order_id'],
+    on_schema_change = 'sync_all_columns'
   )
 }}
 {%- set payment_methods = ['bank_transfer', 'credit_card', 'coupon', 'gift_card'] -%}
@@ -32,3 +33,5 @@ re_factory as (
 )
 select *
 from re_factory
+
+
