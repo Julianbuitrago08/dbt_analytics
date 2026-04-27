@@ -12,14 +12,14 @@ with
 
 orders as (
 
-  select * from {{ ref('bronze_orders') }}
+  select * from {{ ref('bronze_jaffashop_orders') }}
 
 ),
 
 payments as (
 
   select *
-  from {{ ref('bronze_payment') }}
+  from {{ ref('bronze_jaffashop_payment') }}
 
 ),
 
