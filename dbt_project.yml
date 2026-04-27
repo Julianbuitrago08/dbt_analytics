@@ -55,6 +55,6 @@ models:
       gold:
         +materialized: table
         +schema: gold
-
-    snowflake_spend:
-      +enabled: "{{ target.name != 'dev' }}"
+        
+  snowflake_spend:
+    +enabled: "{{ target.name != 'dev' }}"
