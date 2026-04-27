@@ -12,7 +12,7 @@
 with payments as (
 
     select *
-    from {{ ref('bronze_payment') }}
+    from {{ ref('bronze_jaffashop_payment') }}
 
 ),
 re_factory as (
