@@ -12,7 +12,7 @@ with payments as (
         id            as payment_id,
         orderid       as order_id,
         amount
-    from {{ ref('bronze_payment') }}
+    from {{ ref('bronze_jaffashop_payment') }}
 )
 select 
     o.id        as order_id,
@@ -26,7 +26,7 @@ select
     o.status    as order_status,
     sum(p.amount) as lifetime_value
 from payments p
-left join {{ ref('bronze_orders') }} o
+left join {{ ref('bronze_jaffashop_orders') }} o
     on p.order_id = o.id
 where o.user_id is not null
 group by
