@@ -2,8 +2,9 @@
   config(
     tags = 'jaffa_shop',
     schema = 'silver',
-    materialized='table',
-    unique_key = ['customer_id','order_id']
+    materialized = 'incremental',
+    unique_key = ['customer_id','order_id'],
+    on_schema_change = 'sync_all_columns'
   )
 }}
 with customers as (
@@ -59,3 +60,5 @@ final as (
 select *
 from final
 where order_id is not null
+
+

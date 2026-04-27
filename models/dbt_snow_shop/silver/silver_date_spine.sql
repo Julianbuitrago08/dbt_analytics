@@ -2,7 +2,8 @@
   config(
     tags = 'jaffa_shop',
     schema = 'silver',
-    materialized='table',
+    materialized = 'incremental',
+    on_schema_change = 'sync_all_columns'
   ) 
 }}
 
@@ -12,3 +13,4 @@
     end_date="cast('2027-01-01' as date)"
    )
 }}
+

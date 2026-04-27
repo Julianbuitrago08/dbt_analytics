@@ -2,8 +2,9 @@
   config(
     tags = 'jaffa_shop',
     schema = 'silver',
-    materialized='table',
-    unique_key = ['primary_key']
+    materialized = 'incremental',
+    unique_key = ['primary_key'],
+    on_schema_change = 'sync_all_columns'
   )
 }}
 with customers as (
@@ -30,3 +31,4 @@ from customers c
 left join orders o
     on c.customer_id = o.customer_id
 group by 1,2
+
