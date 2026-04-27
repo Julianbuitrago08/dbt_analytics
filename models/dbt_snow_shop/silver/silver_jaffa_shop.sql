@@ -13,7 +13,7 @@ with customers as (
         id         as customer_id,
         first_name,
         last_name
-    from {{ref('bronze_customers')}}
+    from {{ref('bronze_jaffashop_customers')}}
 ),
 orders as (
     select
@@ -22,8 +22,8 @@ orders as (
         o.order_date,
         o.status,
         sum(p.amount) as amount
-    from {{ref('bronze_orders')}} o
-    left join {{ref('bronze_payment')}} p
+    from {{ref('bronze_jaffashop_orders')}} o
+    left join {{ref('bronze_jaffashop_payment')}} p
         on o.id = p.orderid
     group by 
         o.id,

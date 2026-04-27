@@ -1,7 +1,7 @@
 with payments as ( 
     select 
         * 
-    from {{ ref('bronze_payment') }} 
+    from {{ ref('bronze_jaffashop_payment') }} 
 ), 
 aggregated as ( 
     select 

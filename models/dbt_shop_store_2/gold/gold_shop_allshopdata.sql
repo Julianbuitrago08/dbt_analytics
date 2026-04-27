@@ -13,4 +13,4 @@ select
     source_file_name,
     file_last_modified_ts,
     load_timestamp
-from {{ref('silver_allshopdata')}}
+from {{ref('silver_shop_allshopdata')}}

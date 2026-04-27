@@ -8,11 +8,10 @@ config-version: 2
 # This setting configures which "profile" dbt uses for this project.
 profile: "dbt_snow"
 
-source-paths: ["models"]
-data-paths: ["data"]
+model-paths: ["models"]
+seed-paths: ["seeds"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
-seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
@@ -59,3 +58,5 @@ models:
         
   snowflake_spend:
     +enabled: "{{ target.name != 'dev' }}"
+seeds:
+  +enabled: true

@@ -1,5 +1,5 @@
 snapshots:
-  - name: silver_orders_snapshot
+  - name: silver_jaffashop_orders_snapshot
     description: >
       Snapshot of silver order-level metrics to track historical changes in
       order status, valid order date, and lifetime value per customer and order.

@@ -12,7 +12,7 @@ with customers as (
         id as customer_id,
         first_name,
         last_name
-    from {{ ref('bronze_customers') }}
+    from {{ ref('bronze_jaffashop_customers') }}
 ),
 orders as (
     select
@@ -20,7 +20,7 @@ orders as (
         user_id   as customer_id,
         order_date,
         status    as order_status
-    from {{ ref('bronze_orders') }}
+    from {{ ref('bronze_jaffashop_orders') }}
 )
 select 
     c.customer_id,
