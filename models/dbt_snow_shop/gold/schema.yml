@@ -1,5 +1,5 @@
 models:
-  - name: gold_fct_orders
+  - name: gold_jaffashop_fct_orders
     description: >
       Fact table containing order-level revenue metrics. Each row represents
       an order with its associated customer and lifetime value.
@@ -18,7 +18,7 @@ models:
       - name: lifetime_value
         description: Total revenue associated with the order.
 
-  - name: gold_dim_customers
+  - name: gold_jaffashop_dim_customers
     description: >
       Customer dimension table enriched with order history and aggregated
       lifetime value. One row per customer.
@@ -59,7 +59,7 @@ exposures:
       Notebook used for reporting and analysis of order-level metrics derived
       from the gold layer.
     depends_on:
-      - ref('gold_fct_orders')
+      - ref('gold_jaffashop_fct_orders')
     owner:
       name: Julian Buitrago
       email: data@jaffleshop.com
