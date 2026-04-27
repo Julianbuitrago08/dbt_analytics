@@ -11,5 +11,5 @@
 {{ union_tables_by_prefix(
      database='ANALYTICS_DEV',
      schema='bronze',
-     prefix='bronze_raw_'
+     prefix='bronze_shop_raw_'
 ) }}

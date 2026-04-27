@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: silver_customer_orders_legacy
+  - name: silver_jaffashop_customer_orders_legacy
     description: "Legacy fact table combining customer, order, and payment information."
     columns:
       - name: order_id
@@ -94,7 +94,7 @@ models:
               - customer_id
               - order_id
 
-  - name: silver_dialy_customers_orders
+  - name: silver_jaffashop_dialy_customers_orders
     description: "Daily aggregation of customer orders."
     columns:
       - name: primary_key

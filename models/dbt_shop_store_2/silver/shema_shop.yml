@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: silver_shop_allshopdata
+    description: >
+      Raw order data ingested from all the shops
+    tags:
+      - silver
+      - shop_store_2
+    columns:
+      - name: order_id
+        description: Unique identifier for the order.
+        tests:
+          - not_null
+      - name: order_amount
+        description: Total amount of the order.
+        tests:
+          - not_null
+      - name: order_date
+        description: Date when the order was placed.
+        tests:
+          - not_null
+      - name: source_file_name
+        description: Name of the source file from which the record was loaded.
+        tests:
+          - not_null
+      - name: file_last_modified_ts
+        description: Last modified timestamp of the source file.
+      - name: load_timestamp
+        description: Timestamp when the file was scanned and loaded into Snowflake.

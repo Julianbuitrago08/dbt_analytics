@@ -1,4 +1,4 @@
-{% snapshot silver_orders_snapshot %}
+{% snapshot silver_jaffashop_orders_snapshot %}
 
 {{
     config(
@@ -23,6 +23,6 @@ select
     valid_order_date,
     order_status,
     lifetime_value
-from {{ ref('silver_orders') }}
+from {{ ref('silver_jaffashop_orders') }}
 
 {% endsnapshot %}
