@@ -14,7 +14,7 @@ sources:
 
 models:
 
-  - name: bronze_customers
+  - name: bronze_jaffashop_customers
     description: "Raw customers data loaded from a CSV file in a Snowflake stage."
     columns:
       - name: id
@@ -38,7 +38,7 @@ models:
       - name: load_timestamp
         description: "Timestamp when the record was loaded into Snowflake."
 
-  - name: bronze_orders
+  - name: bronze_jaffashop_orders
     description: "Raw orders data loaded from a CSV file in a Snowflake stage."
     columns:
       - name: id
@@ -75,7 +75,7 @@ models:
 
       - name: load_timestamp
         description: "Timestamp when the record was loaded into Snowflake."
-  - name: bronze_payment
+  - name: bronze_jaffashop_payment
     description: "Raw Stripe payment data loaded from a CSV file in a Snowflake stage."
     columns:
       - name: id
