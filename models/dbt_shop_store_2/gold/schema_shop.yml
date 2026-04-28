@@ -3,9 +3,10 @@ models:
   - name: gold_shop_allshopdata
     description: >
       Raw order data ingested from all the shops
-    tags:
-      - gold
-      - shop_store_2
+    config:
+      tags:
+        - gold
+        - shop_store_2
     columns:
       - name: order_id
         description: Unique identifier for the order.
