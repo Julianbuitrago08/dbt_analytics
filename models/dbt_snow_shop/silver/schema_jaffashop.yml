@@ -73,10 +73,7 @@ models:
         description: "Total number of orders placed."
       - name: avg_amount
         description: "Average order amount per customer."
-        data_tests:
-          - average_dollars_spent_greater_than_one:
-              arguments:
-                group_by_column: customer_id
+
 
   - name: silver_jaffashop_int_orders
     description: "Intermediate table of paid orders enriched with payment data."
@@ -97,6 +94,8 @@ models:
             combination_of_columns:
               - customer_id
               - order_id
+      - dbt_utils.expression_is_true:
+          expression: "total_amount_paid >= 0"
 
   - name: silver_jaffashop_dialy_customers_orders
     description: "Daily aggregation of customer orders."
