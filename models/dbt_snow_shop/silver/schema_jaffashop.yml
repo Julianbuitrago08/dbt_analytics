@@ -94,8 +94,11 @@ models:
             combination_of_columns:
               - customer_id
               - order_id
+
       - dbt_utils.expression_is_true:
-          expression: "total_amount_paid >= 0"
+          arguments:
+            expression: "total_amount_paid >= 0"
+
 
   - name: silver_jaffashop_dialy_customers_orders
     description: "Daily aggregation of customer orders."
